@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕷️ Spider Bot - Your Friendly Neighborhood Discord Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #FF4500 100%);
+            color: white;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .web-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 1px, transparent 1px),
+                radial-gradient(circle at 40% 70%, rgba(255,255,255,0.05) 2px, transparent 2px);
+            background-size: 100px 100px, 150px 150px, 200px 200px;
+            z-index: -1;
+            animation: webMove 20s ease-in-out infinite;
+        }
+        
+        @keyframes webMove {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(1deg); }
+        }
+        
+        .spider-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: spiderSwing 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 0, 0.8));
+        }
+        
+        @keyframes spiderSwing {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(-5deg); }
+            75% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 15px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 2px solid #FFD700;
+            z-index: 100;
+        }
+        
+        .language-switcher button {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .language-switcher button:hover {
+            background: rgba(255,215,0,0.3);
+            transform: scale(1.05);
+        }
+        
+        .language-switcher button.active {
+            background: #FFD700;
+            color: #8B0000;
+            box-shadow: 0 0 15px rgba(255,215,0,0.5);
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: heroGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes heroGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255,215,0,0.8)); }
+            50% { filter: drop-shadow(0 0 20px rgba(255,215,0,1)); }
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            font-weight: 600;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature {
+            background: linear-gradient(135deg, rgba(139,0,0,0.8), rgba(220,20,60,0.8));
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            border: 3px solid #FFD700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature::before {
+            content: '🕷️';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 4rem;
+            opacity: 0.2;
+            transform: rotate(45deg);
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255,215,0,0.3);
+            border-color: #FFA500;
+        }
+        
+        .feature h3 {
+            margin-bottom: 1rem;
+            color: #FFD700;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+        
+        .invite-btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #8B0000;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.4);
+        }
+        
+        .invite-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.6);
+        }
+        
+        .webhook-section {
+            margin-top: 4rem;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(139,0,0,0.7));
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 3px solid #FFD700;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+        
+        .command-list {
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+        
+        .command-list li {
+            margin: 0.8rem 0;
+            padding: 1rem;
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .command-list li:hover {
+            background: rgba(255,215,0,0.1);
+            transform: translateX(10px);
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="web-background"></div>
+    
+    <div class="language-switcher">
+        <button id="lang-en" class="active" onclick="switchLanguage('en')">🇺🇸 English</button>
+        <button id="lang-pt" onclick="switchLanguage('pt')">🇧🇷 Português</button>
+    </div>
+
+    <div class="container">
+        <div class="spider-icon">🕷️</div>
+        
+        <div id="content-en" class="language-content">
+            <h1>Spider Bot</h1>
+            <p class="subtitle">🕸️ Your Friendly Neighborhood Discord Bot 🕸️</p>
+            <p class="subtitle">"With great power comes great responsibility"</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>🕷️ Spider-Sense Moderation</h3>
+                    <p>Kick members with spider-like precision! Complete with web-slinging logs and superhero-level permissions.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🕸️ Web-Shooter Invites</h3>
+                    <p>Create amazing invite links like Spider-Man shooting webs! Customizable limits and expiration times.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🛡️ Permission Safe</h3>
+                    <p>Respects Discord's role hierarchy with the wisdom of Uncle Ben. No spider-bot crosses the line!</p>
+                </div>
+            </div>
+            
+            <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=125951649361&scope=bot applications.commands" 
+               class="invite-btn" target="_blank">
+               🕷️ Add Spider Bot to Discord
+            </a>
+            
+            <div class="webhook-section">
+                <h3>🕸️ Spider-Powers (Commands)</h3>
+                <ul class="command-list">
+                    <li><strong>/spiderkick @user [reason]</strong> - Web-sling troublemakers out!</li>
+                    <li><strong>/spiderinvite [uses] [duration]</strong> - Shoot invitation webs!</li>
+                    <li><strong>/spiderhelp</strong> - Access your spider-sense help</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="content-pt" class="language-content hidden">
+            <h1>Spider Bot</h1>
+            <p class="subtitle">🕸️ Seu Amigável Bot Vizinho do Discord 🕸️</p>
+            <p class="subtitle">"Com grandes poderes vêm grandes responsabilidades"</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>🕷️ Moderação com Sentido Aranha</h3>
+                    <p>Expulse membros com precisão aracnídea! Completo com logs de teias e gerenciamento de permissões.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🕸️ Convites Disparadores de Teia</h3>
+                    <p>Crie links de convite incríveis como o Homem-Aranha disparando teias! Limites personalizáveis.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>🛡️ Segurança do Tio Ben</h3>
+                    <p>Respeita a hierarquia de cargos do Discord com a sabedoria do Tio Ben!</p>
+                </div>
+            </div>
+            
+            <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=125951649361&scope=bot applications.commands" 
+               class="invite-btn" target="_blank">
+               🕷️ Adicione Spider Bot ao Discord
+            </a>
+            
+            <div class="webhook-section">
+                <h3>🕸️ Poderes Aranha (Comandos)</h3>
+                <ul class="command-list">
+                    <li><strong>/spiderkick @usuário [motivo]</strong> - Dispare teias para remover problemas!</li>
+                    <li><strong>/spiderinvite [usos] [duração]</strong> - Dispare teias de convite!</li>
+                    <li><strong>/spiderhelp</strong> - Acesse seu menu de ajuda do sentido aranha</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchLanguage(lang) {
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`content-${lang}`).classList.remove('hidden');
+            document.getElementById(`lang-${lang}`).classList.add('active');
+            document.title = lang === 'pt' 
+                ? '🕷️ Spider Bot - Seu Amigável Bot Vizinho!' 
+                : '🕷️ Spider Bot - Your Friendly Neighborhood Discord Bot!';
+        }
+        
+        window.addEventListener('load', function() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            if (browserLang.startsWith('pt')) {
+                switchLanguage('pt');
+            }
+        });
+    </script>
+</body>
+</html>
